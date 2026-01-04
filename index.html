@@ -1,62 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Oracle - Your Daily Wisdom</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7835415696634246" crossorigin="anonymous"></script>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Georgia', serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .container {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 600px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-        h1 {
-            color: #7B2CBF;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .oracle-text {
-            font-size: 1.2em;
-            line-height: 1.8;
-            color: #333;
-            text-align: center;
-            margin: 30px 0;
-            padding: 20px;
-            background: #f8f9fa;
-            border-left: 4px solid #FFD60A;
-            border-radius: 8px;
-        }
-        .coming-soon {
-            text-align: center;
-            color: #666;
-            margin-top: 30px;
-            padding: 20px;
-            background: #fff3cd;
-            border-radius: 10px;
-        }
-        .admob-info {
-            margin-top: 20px;
-            padding: 15px;
-            background: #e7f3ff;
-            border-radius: 8px;
-            font-size: 0.9em;
-        }
-    </style>
-</head>
 <body>
+ <div class="container">
+  <div class="header">
+   <h1>🔱 Daily Oracle</h1>
+   <p class="date-display" id="dateDisplay"></p>
+  </div>
+  <div class="ad-banner"><p>📢 AdMob Banner</p></div>
+  <div class="oracle-card">
+   <div class="oracle-title" id="oracleTitle">Loading...</div>
+   <div class="oracle-text" id="oracleText"></div>
+   <div class="mythology-source" id="mythologySource"></div>
+  </div>
+  <div class="controls">
+   <button class="btn-primary" onclick="showNewReading()">🔮 New Reading</button>
+   <button class="btn-secondary" onclick="shareReading()">📤 Share</button>
+  </div>
+  <div class="share-section">
+   <p><strong>💎 Unlock All 365 Readings</strong></p>
+   <button class="btn-primary" onclick="watchRewardedAd()" style="margin-top:10px;">🎁 Watch Video</button>
+  </div>
+  <div class="footer">
+   <p>🏛️ <strong>Kypria Technologies</strong></p>
+   <p>Ancient Wisdom • Modern Guidance</p>
+   <p style="margin-top:10px;font-size:0.85em;">Powered by Greek, Norse, Egyptian & Celtic mythology</p>
+  </div>
+ </div><body>
     <div class="container">
         <h1>🔱 Daily Oracle</h1>
         <div class="oracle-text">
@@ -76,3 +43,36 @@
     </div>
 </body>
 </html>
+    <script>
+        // Oracle readings database (20 sample readings)
+        const ORACLES = [
+            {day:1,title:"Phoenix Rising",text:"From ashes you emerge stronger. Today marks rebirth. Like the Phoenix, transform challenges into opportunities.",source:"Egyptian - Bennu Bird"},
+            {day:2,title:"Athena's Wisdom",text:"Strategy triumphs over force. Plan carefully. Intelligence guided by patience achieves what strength cannot.",source:"Greek - Athena"},
+            {day:3,title:"Norns' Thread",text:"Your destiny is being woven today. Each choice adds a thread to fate's tapestry.",source:"Norse - Three Norns"},
+            {day:4,title:"Thoth's Knowledge",text:"Seek truth in unexpected places. Knowledge comes to the curious and open-minded.",source:"Egyptian - Thoth"},
+            {day:5,title:"Hermes' Journey",text:"Communication opens doors. Your words carry power. Bridge understanding between perspectives.",source:"Greek - Hermes"},
+            {day:6,title:"Odin's Sacrifice",text:"Sometimes sacrifice brings wisdom. Consider what you'll give for growth.",source:"Norse - Odin"},
+            {day:7,title:"Ra's Journey",text:"Each day is a new voyage. Your journey continues regardless of obstacles.",source:"Egyptian - Ra"},
+            {day:8,title:"Artemis' Independence",text:"Your path is yours alone. Honor your autonomy and trust your instincts.",source:"Greek - Artemis"},
+            {day:9,title:"Loki's Transformation",text:"Adaptability is your asset. Be willing to change form to meet challenges.",source:"Norse - Loki"},
+            {day:10,title:"Isis' Devotion",text:"Love and dedication overcome obstacles. Your perseverance will be rewarded.",source:"Egyptian - Isis"},
+            {day:11,title:"Apollo's Light",text:"Clarity and truth illuminate your way. Seek honesty in yourself and others.",source:"Greek - Apollo"},
+            {day:12,title:"Freya's Beauty",text:"Balance warrior spirit with compassion. True power includes tenderness.",source:"Norse - Freya"},
+            {day:13,title:"Anubis' Judgment",text:"Today calls for honest self-assessment. Weigh your actions against your values.",source:"Egyptian - Anubis"},
+            {day:14,title:"Hephaestus' Craft",text:"Your labor shapes reality. Dedication to work creates lasting value.",source:"Greek - Hephaestus"},
+            {day:15,title:"Heimdall's Vigilance",text:"Stay alert to opportunities and threats. Your awareness protects what you value.",source:"Norse - Heimdall"},
+            {day:16,title:"Hathor's Joy",text:"Embrace pleasure and celebration. Life's beauty deserves acknowledgment.",source:"Egyptian - Hathor"},
+            {day:17,title:"Poseidon's Depths",text:"Explore the depths of your emotions. Great power lies beneath the surface.",source:"Greek - Poseidon"},
+            {day:18,title:"Frigg's Foresight",text:"Knowing the future means accepting what cannot be changed. Wisdom includes limits.",source:"Norse - Frigg"},
+            {day:19,title:"Sekhmet's Fury",text:"Righteous anger can force change. Channel your passion productively.",source:"Egyptian - Sekhmet"},
+            {day:20,title:"Demeter's Cycle",text:"All things have seasons. Trust in the rhythm of growth and rest.",source:"Greek - Demeter"}
+        ];
+        function getDayOfYear(){const now=new Date();const start=new Date(now.getFullYear(),0,0);return Math.floor((now-start)/(1000*60*60*24));}
+        function getDate(){return new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});}
+        function displayOracle(){const idx=(getDayOfYear()-1)%ORACLES.length;const o=ORACLES[idx];document.getElementById('dateDisplay').textContent=getDate();document.getElementById('oracleTitle').textContent=o.title;document.getElementById('oracleText').textContent=o.text;document.getElementById('mythologySource').textContent='📜 '+o.source;}
+        function showNewReading(){const o=ORACLES[Math.floor(Math.random()*ORACLES.length)];document.getElementById('oracleTitle').textContent=o.title;document.getElementById('oracleText').textContent=o.text;document.getElementById('mythologySource').textContent='📜 '+o.source;console.log('Interstitial: ca-app-pub-7835415696634246/3873471751');}
+        function shareReading(){const title=document.getElementById('oracleTitle').textContent;const text=document.getElementById('oracleText').textContent;if(navigator.share){navigator.share({title:'Daily Oracle: '+title,text:text,url:window.location.href}).catch(e=>console.log('Share cancelled'));}else{alert('Sharing not supported. Copy URL to share!');}}
+        function watchRewardedAd(){alert('🎁 Rewarded Video\n\nWatch ad to unlock all 365 readings!\n\nAd Unit: ca-app-pub-7835415696634246/6244367867');}
+        document.addEventListener('DOMContentLoaded',displayOracle);
+        if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').then(r=>console.log('SW:',r)).catch(e=>console.log('SW failed'));}
+    </script>
